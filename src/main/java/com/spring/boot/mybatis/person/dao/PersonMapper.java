@@ -1,0 +1,15 @@
+package com.spring.boot.mybatis.person.dao;
+
+import com.spring.boot.mybatis.person.entity.Person;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+/**
+ * created by Jay on 2020/4/8
+ */
+@Repository
+public interface PersonMapper
+{
+    List<Person> list();
+}
