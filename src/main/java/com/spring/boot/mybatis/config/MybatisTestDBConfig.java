@@ -7,46 +7,61 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * created by Jay on 2020/4/8
  */
 @Configuration
 @MapperScan(basePackageClasses = {StudentMapper.class},
-        sqlSessionFactoryRef = "sqlSessionFactory2")
+        sqlSessionFactoryRef = "sqlSessionFactoryForTestdb")
 public class MybatisTestDBConfig
 {
 
     @Autowired
-    @Qualifier("testdb")
-    private DataSource testdb;
+    @Qualifier("dataSourceForTestdb")
+    private DataSource dataSourceForTestdb;
 
 
     @Bean
-    public SqlSessionFactory sqlSessionFactory2() throws Exception
+    public SqlSessionFactory sqlSessionFactoryForTestdb()
+            throws Exception
     {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.setMapUnderscoreToCamelCase(true);
         factoryBean.setConfiguration(configuration);
-        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
-                                               .getResources("classpath:mapper/testdb/*.xml"));
+        List<Resource> resources = new ArrayList<>();
+
+        Resource[] resources1 = new PathMatchingResourcePatternResolver()
+                .getResources("classpath:mapper/dataSourceForTestdb/*.xml");
+        resources.addAll(Arrays.asList(resources1));
+        Resource[] resources2 = new PathMatchingResourcePatternResolver()
+                .getResources("classpath:mapper/dataSourceForTestdb/*.xml");
+        resources.addAll(Arrays.asList(resources2));
+        Resource[] resources3 = new Resource[resources1.length + resources2.length];
+        factoryBean.setMapperLocations(resources.toArray(resources3));
         // 使用testDBa数据源, 连接testDBa库
-        factoryBean.setDataSource(testdb);
+        factoryBean.setDataSource(dataSourceForTestdb);
         return factoryBean.getObject();
 
     }
 
     @Bean
-    public SqlSessionTemplate sqlSessionTemplate2() throws Exception
+    public SqlSessionTemplate sqlSessionTemplate2()
+            throws Exception
     {
-        // 使用注解中配置的Factory
-        SqlSessionTemplate template = new SqlSessionTemplate(sqlSessionFactory2());
+        SqlSessionTemplate template = new SqlSessionTemplate(sqlSessionFactoryForTestdb());
         return template;
     }
 }

@@ -14,19 +14,17 @@ import javax.sql.DataSource;
 public class DataSourceConfig
 {
 
-    @Bean(name = "test")
-    // application.properteis中对应属性的前缀
+    @Bean
     @ConfigurationProperties(prefix = "spring.datasource.test")
-    public DataSource dataSource1()
+    public DataSource dataSourceForTest()
     {
         return DataSourceBuilder.create().build();
     }
 
 
-    @Bean(name = "testdb")
-    // application.properteis中对应属性的前缀
+    @Bean
     @ConfigurationProperties(prefix = "spring.datasource.testdb")
-    public DataSource dataSource2()
+    public DataSource dataSourceForTestdb()
     {
         return DataSourceBuilder.create().build();
     }

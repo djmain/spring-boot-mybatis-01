@@ -17,36 +17,37 @@ import javax.sql.DataSource;
  * created by Jay on 2020/4/8
  */
 @Configuration
-@MapperScan(basePackageClasses = {PersonMapper.class},
-        sqlSessionFactoryRef = "sqlSessionFactory1")
+@MapperScan(
+        basePackageClasses = {PersonMapper.class},
+        sqlSessionFactoryRef = "sqlSessionFactoryForTest")
 public class MybatisTestConfig
 {
 
     @Autowired
-    @Qualifier("test")
-    private DataSource test;
+    @Qualifier("dataSourceForTest")
+    private DataSource dataSourceForTest;
 
 
     @Bean
-    public SqlSessionFactory sqlSessionFactory1() throws Exception
+    public SqlSessionFactory sqlSessionFactoryForTest() throws Exception
     {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
         configuration.setMapUnderscoreToCamelCase(true);
         factoryBean.setConfiguration(configuration);
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
-                                               .getResources("classpath:mapper/test/*.xml"));
+                                               .getResources("classpath:mapper/dataSourceForTest/*.xml"));
         // 使用testDBa数据源, 连接testDBa库
-        factoryBean.setDataSource(test);
+        factoryBean.setDataSource(dataSourceForTest);
         return factoryBean.getObject();
 
     }
 
     @Bean
-    public SqlSessionTemplate sqlSessionTemplate1() throws Exception
+    public SqlSessionTemplate sqlSessionTemplateForTest() throws Exception
     {
         // 使用注解中配置的Factory
-        SqlSessionTemplate template = new SqlSessionTemplate(sqlSessionFactory1());
+        SqlSessionTemplate template = new SqlSessionTemplate(sqlSessionFactoryForTest());
         return template;
     }
 }
