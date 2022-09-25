@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
  * created by Jay on 2020/4/8
  */
 @Service
-public class Runner implements ApplicationRunner
-{
+public class Runner implements ApplicationRunner {
     @Autowired
     PersonService personService;
 
@@ -20,9 +19,7 @@ public class Runner implements ApplicationRunner
     StudentService studentService;
 
     @Override
-    public void run(ApplicationArguments args) throws Exception
-    {
-        System.out.println(personService.list());
-        System.out.println(studentService.list());
+    public void run(ApplicationArguments args) throws Exception {
+        System.out.println(7788);
     }
 }

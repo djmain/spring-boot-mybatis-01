@@ -1,5 +1,6 @@
 package com.spring.boot.mybatis.config;
 
+import com.spring.boot.mybatis.person.dao.BookMapper;
 import com.spring.boot.mybatis.person.dao.PersonMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -36,11 +37,10 @@ public class MybatisTestConfig
         configuration.setMapUnderscoreToCamelCase(true);
         factoryBean.setConfiguration(configuration);
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
-                                               .getResources("classpath:mapper/dataSourceForTest/*.xml"));
+                                               .getResources("classpath:mapper/test/*.xml"));
         // 使用testDBa数据源, 连接testDBa库
         factoryBean.setDataSource(dataSourceForTest);
         return factoryBean.getObject();
-
     }
 
     @Bean

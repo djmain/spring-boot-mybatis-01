@@ -8,11 +8,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
         (exclude = {
                 DataSourceAutoConfiguration.class
         })
-public class SpringBootMybatisApplication
-{
+public class SpringBootMybatisApplication {
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         SpringApplication.run(SpringBootMybatisApplication.class, args);
     }
 

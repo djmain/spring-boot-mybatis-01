@@ -44,10 +44,10 @@ public class MybatisTestDBConfig
         List<Resource> resources = new ArrayList<>();
 
         Resource[] resources1 = new PathMatchingResourcePatternResolver()
-                .getResources("classpath:mapper/dataSourceForTestdb/*.xml");
+                .getResources("classpath:mapper/test/*.xml");
         resources.addAll(Arrays.asList(resources1));
         Resource[] resources2 = new PathMatchingResourcePatternResolver()
-                .getResources("classpath:mapper/dataSourceForTestdb/*.xml");
+                .getResources("classpath:mapper/testdb/*.xml");
         resources.addAll(Arrays.asList(resources2));
         Resource[] resources3 = new Resource[resources1.length + resources2.length];
         factoryBean.setMapperLocations(resources.toArray(resources3));
