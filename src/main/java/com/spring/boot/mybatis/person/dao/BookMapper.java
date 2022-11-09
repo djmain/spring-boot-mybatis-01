@@ -9,7 +9,6 @@ import java.util.List;
  * created by Jay on 2020/4/8
  */
 @Repository
-public interface BookMapper
-{
+public interface BookMapper {
     List<Person> list();
 }
